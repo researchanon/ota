@@ -1,0 +1,36 @@
+rm *.hi
+rm *.o
+rm TestOTASet
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded TestOTASet.hs
+[2 of 6] Compiling CASList          ( CASList.hs, CASList.o )
+[3 of 6] Compiling GenOpsAndSet     ( GenOpsAndSet.hs, GenOpsAndSet.o )
+[4 of 6] Compiling AbstractLock     ( AbstractLock.hs, AbstractLock.o )
+[5 of 6] Compiling OTASet           ( OTASet.hs, OTASet.o )
+[6 of 6] Compiling Main             ( TestOTASet.hs, TestOTASet.o )
+Linking TestOTASet ...
+rm *.hi
+rm *.o
+rm TestSTMSet
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded TestSTMSet.hs
+[1 of 3] Compiling GenOpsAndSet     ( GenOpsAndSet.hs, GenOpsAndSet.o )
+[2 of 3] Compiling STMSet           ( STMSet.hs, STMSet.o )
+[3 of 3] Compiling Main             ( TestSTMSet.hs, TestSTMSet.o )
+Linking TestSTMSet ...
+rm *.hi
+rm *.o
+rm TestOTASet
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded TestOTASet.hs
+[2 of 6] Compiling CASList          ( CASList.hs, CASList.o )
+[3 of 6] Compiling GenOpsAndSet     ( GenOpsAndSet.hs, GenOpsAndSet.o )
+[4 of 6] Compiling AbstractLock     ( AbstractLock.hs, AbstractLock.o )
+[5 of 6] Compiling OTASet           ( OTASet.hs, OTASet.o )
+[6 of 6] Compiling Main             ( TestOTASet.hs, TestOTASet.o )
+Linking TestOTASet ...
+rm *.hi
+rm *.o
+rm TestSTMSet
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded TestSTMSet.hs
+[1 of 3] Compiling GenOpsAndSet     ( GenOpsAndSet.hs, GenOpsAndSet.o )
+[2 of 3] Compiling STMSet           ( STMSet.hs, STMSet.o )
+[3 of 3] Compiling Main             ( TestSTMSet.hs, TestSTMSet.o )
+Linking TestSTMSet ...

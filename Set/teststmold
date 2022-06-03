@@ -1,0 +1,95 @@
+module Main where
+
+import Control.Concurrent
+import Control.Concurrent.MVar
+import System.Environment
+import System.Random
+import Data.Time
+--import Data.Time.Clock
+import Data.List
+-- import Control.Concurrent.STM
+import STMSet
+
+data Ops = Contains Int | Remove Int | Add Int
+
+createSet :: ListHandle Int -> Int -> Int -> IO ()
+createSet set range 0 = return ()
+createSet set range n = do
+  v<-randomRIO (1, range)
+  ok <- add set v
+  case ok of
+    True -> createSet set range (n-1)
+    False -> createSet set range n
+
+
+genListOps :: Int -> Int -> IO [Ops]
+genListOps range 0 = return []
+genListOps range size = do
+  op <- randomRIO (1,5::Int)
+  val <- randomRIO (1,range)
+  list <- genListOps range (size-1)
+  case op of
+    1 -> return (Contains val:list)
+    2 -> return (Contains val:list)
+    3 -> return (Contains val:list)
+    4 -> return (Remove val:list)
+    5 -> return (Add val:list)
+
+genListOpsHeavy :: Int -> Int -> IO [Ops]
+genListOpsHeavy range 0 = return []
+genListOpsHeavy range size = do
+  op <- randomRIO (0,9::Int)
+  val <- randomRIO (1,range)
+  list <- genListOpsHeavy range (size-1)
+  case op of
+    0 -> return (Add val:list)
+    1 -> return (Add val:list)
+    2 -> return (Add val:list)
+    3 -> return (Add val:list)
+    4 -> return (Add val:list)
+    5 -> return (Add val:list)
+    6 -> return (Add val:list)
+    7 -> return (Add val:list)
+    8 -> return (Remove val:list)
+    9 -> return (Contains val:list)
+
+
+
+main :: IO ()
+main = do
+  args <- getArgs
+  let range = read (args!!0)
+  let size = read (args!!1)
+  set <- newList size
+  let ops = read (args !!2)
+  let heavy = read (args !! 3)
+  let nthreads = read (args !! 4)
+  let ops2 = div ops nthreads
+  createSet set range size
+  mvar <- newEmptyMVar
+  listOps <- if heavy == 0
+    then mapM (\nops -> genListOps range nops) (replicate nthreads ops2)
+    else mapM (\nops -> genListOpsHeavy range nops) (replicate nthreads ops2)
+  -- putStrLn "Start"
+  start <- getCurrentTime
+  mapM (\ lops -> forkIO (thread set mvar lops)) listOps
+  mapM takeMVar (replicate nthreads mvar)
+  stop <- getCurrentTime
+  print $ diffUTCTime stop start
+  -- putStrLn "Done"
+  --print $ nominalDiffTimeToSeconds $ diffUTCTime timeEnd timeStart
+
+
+thread :: ListHandle Int -> MVar () -> [Ops]-> IO ()
+thread set mvar [] = putMVar mvar ()
+thread set mvar (op:xs) = do
+  case op of
+    Contains val-> do
+      _<-contains set val
+      thread set mvar xs
+    Remove val -> do
+      _<-remove set val
+      thread set mvar xs
+    Add val -> do
+      _<- add set val
+      thread set mvar xs

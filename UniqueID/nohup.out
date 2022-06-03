@@ -1,0 +1,39 @@
+rm *.hi
+rm *.o
+rm IDCAS
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded IDCAS.hs
+[1 of 1] Compiling Main             ( IDCAS.hs, IDCAS.o )
+
+IDCAS.hs:36:1: warning: [-Wtabs]
+    Tab character found here, and in 18 further locations.
+    Please use spaces instead.
+   |
+36 |         callNTimes numOps (do
+   | ^^^^^^^^
+Linking IDCAS ...
+rm *.hi
+rm *.o
+rm IDOTA
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded IDOTA.hs
+[1 of 1] Compiling Main             ( IDOTA.hs, IDOTA.o )
+
+IDOTA.hs:42:1: warning: [-Wtabs]
+    Tab character found here, and in 12 further locations.
+    Please use spaces instead.
+   |
+42 |         callNTimes numOps (do
+   | ^^^^^^^^
+Linking IDOTA ...
+rm *.hi
+rm *.o
+rm IDSTM
+/home/dubois/ghc/inplace/bin/ghc-stage2 --make -rtsopts -threaded IDSTM.hs
+[1 of 1] Compiling Main             ( IDSTM.hs, IDSTM.o )
+
+IDSTM.hs:29:1: warning: [-Wtabs]
+    Tab character found here, and in 19 further locations.
+    Please use spaces instead.
+   |
+29 |         callNTimes numOps ( do
+   | ^^^^^^^^
+Linking IDSTM ...
